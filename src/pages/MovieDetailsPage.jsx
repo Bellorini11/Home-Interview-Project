@@ -26,7 +26,7 @@ export default function MovieDetailsPage() {
       setMovie(null);
       const minDelay = new Promise((resolve) => setTimeout(resolve, 1000));
       if (!API_KEY) {
-        setError("Add your OMDb API key to .env, then restart npm start.");
+        setError();
         setLoading(false);
         return;
       }

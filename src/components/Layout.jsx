@@ -1,20 +1,22 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import { Outlet } from "react-router-dom";
+import React from "react";
+import { useState } from "react";
+import Nav from "./Nav.jsx";
+import Footer from "./Footer.jsx";
 
-export default function Layout() {
-  const navigate = useNavigate();
-  const handleSearch = (term) => navigate(`/?q=${encodeURIComponent(term)}`);
+const Layout = () => {
+  const [searchData, setSearchData] = useState({
+    results: [],
+    query: "",
+  });
+  const [loading, setLoading] = useState(true);
   return (
     <>
-      <nav className="nav">
-        <Link className="logo" to="/" aria-label="Simplified Flix home">
-          <img src="/assets/fes-logo.png" alt="" className="logo__img" />
-          <div className="logo__title"><span>Simplified</span> Flix</div>
-        </Link>
-        <SearchBar onSearch={handleSearch} />
-      </nav>
-      <Outlet />
-      <footer><p>Created by Simplified. Powered by OMDBapi.</p></footer>
+      <Nav setSearchData={setSearchData} setLoading={setLoading} />
+      <Outlet context={{ searchData, loading }} />
+      <Footer />
     </>
   );
-}
+};
+
+export default Layout;
